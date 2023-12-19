@@ -1,0 +1,21 @@
+enum operators_index {
+    MUL         = 0,
+    ADD         = 1,
+    SUB         = 2,
+    DIV         = 3,
+    POW         = 4,
+    SIN         = 5,
+    COS         = 6,
+    TAN         = 7,
+    LOG         = 8,
+    EXP         = 9,
+    ASGMT       = 10,
+    IF          = 11,
+    BEGIN_PROG  = 12,
+    END_PROG    = 13,
+    OPEN_PAR    = 14,
+    CLOSE_PAR   = 15,
+    BEGIN_OPER  = 16,
+    END_OPER    = 17,
+    SEQ_EXEC    = 18
+};

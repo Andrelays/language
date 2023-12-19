@@ -1,0 +1,66 @@
+digraph Tree {
+	rankdir = TB;
+	node [shape = record];
+	splines=ortho;
+	subgraph cluster0 {
+		label = "called  from:    tree.cpp(61)  ssize_t tree_destructor(tree*)";
+		node_0x603000000400  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [;] | <right> R} "];
+		node_0x603000000340  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [;] | <right> R} "];
+		node_0x603000000100  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [=] | <right> R} "];
+		node_0x6030000000a0  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [y = 0] | <right> R} "];
+
+	node_0x603000000100:<left> -> node_0x6030000000a0 	[color = blue];
+		node_0x6030000000d0  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [6] | <right> R} "];
+
+	node_0x603000000100:<right> -> node_0x6030000000d0 	[color = blue];
+
+	node_0x603000000340:<left> -> node_0x603000000100 	[color = blue];
+		node_0x603000000310  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [турель в кустах] | <right> R} "];
+		node_0x603000000190  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [+] | <right> R} "];
+		node_0x603000000130  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [x = 0] | <right> R} "];
+
+	node_0x603000000190:<left> -> node_0x603000000130 	[color = blue];
+		node_0x603000000160  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [2] | <right> R} "];
+
+	node_0x603000000190:<right> -> node_0x603000000160 	[color = blue];
+
+	node_0x603000000310:<left> -> node_0x603000000190 	[color = blue];
+		node_0x6030000002e0  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [;] | <right> R} "];
+		node_0x603000000220  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [=] | <right> R} "];
+		node_0x6030000001c0  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [z = 0] | <right> R} "];
+
+	node_0x603000000220:<left> -> node_0x6030000001c0 	[color = blue];
+		node_0x6030000001f0  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [z = 0] | <right> R} "];
+
+	node_0x603000000220:<right> -> node_0x6030000001f0 	[color = blue];
+
+	node_0x6030000002e0:<left> -> node_0x603000000220 	[color = blue];
+		node_0x6030000002b0  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [=] | <right> R} "];
+		node_0x603000000250  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [x = 0] | <right> R} "];
+
+	node_0x6030000002b0:<left> -> node_0x603000000250 	[color = blue];
+		node_0x603000000280  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [8] | <right> R} "];
+
+	node_0x6030000002b0:<right> -> node_0x603000000280 	[color = blue];
+
+	node_0x6030000002e0:<right> -> node_0x6030000002b0 	[color = blue];
+
+	node_0x603000000310:<right> -> node_0x6030000002e0 	[color = blue];
+
+	node_0x603000000340:<right> -> node_0x603000000310 	[color = blue];
+
+	node_0x603000000400:<left> -> node_0x603000000340 	[color = blue];
+		node_0x6030000003d0  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [=] | <right> R} "];
+		node_0x603000000370  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [x = 0] | <right> R} "];
+
+	node_0x6030000003d0:<left> -> node_0x603000000370 	[color = blue];
+		node_0x6030000003a0  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [6] | <right> R} "];
+
+	node_0x6030000003d0:<right> -> node_0x6030000003a0 	[color = blue];
+
+	node_0x603000000400:<right> -> node_0x6030000003d0 	[color = blue];
+
+
+		Info[shape = Mrecord, label = "size = 17 "];
+	}
+}
