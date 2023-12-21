@@ -1,0 +1,16 @@
+push 6
+pop [0]
+push [1]
+push 2
+add
+push 0
+je end_while_1:
+push -1
+push 8
+push [1]
+add
+mul
+pop [1]
+end_while_1:
+push 6
+pop [1]

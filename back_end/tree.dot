@@ -30,18 +30,18 @@ digraph Tree {
 
 	node_0x604000000310:<left> -> node_0x604000000190 	[color = blue];
 		node_0x6040000002d0  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [*] | <right> R} "];
-		node_0x604000000290  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [-1] | <right> R} "];
+		node_0x6040000001d0  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [-1] | <right> R} "];
 
-	node_0x6040000002d0:<left> -> node_0x604000000290 	[color = blue];
-		node_0x604000000250  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [+] | <right> R} "];
-		node_0x6040000001d0  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [8] | <right> R} "];
+	node_0x6040000002d0:<left> -> node_0x6040000001d0 	[color = blue];
+		node_0x604000000290  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [+] | <right> R} "];
+		node_0x604000000210  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [8] | <right> R} "];
 
-	node_0x604000000250:<left> -> node_0x6040000001d0 	[color = blue];
-		node_0x604000000210  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [x = 0] | <right> R} "];
+	node_0x604000000290:<left> -> node_0x604000000210 	[color = blue];
+		node_0x604000000250  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [x = 0] | <right> R} "];
 
-	node_0x604000000250:<right> -> node_0x604000000210 	[color = blue];
+	node_0x604000000290:<right> -> node_0x604000000250 	[color = blue];
 
-	node_0x6040000002d0:<right> -> node_0x604000000250 	[color = blue];
+	node_0x6040000002d0:<right> -> node_0x604000000290 	[color = blue];
 
 	node_0x604000000310:<right> -> node_0x6040000002d0 	[color = blue];
 
@@ -61,6 +61,6 @@ digraph Tree {
 	node_0x604000000490:<right> -> node_0x604000000450 	[color = blue];
 
 
-		Info[shape = Mrecord, label = "size = 17 "];
+		Info[shape = Mrecord, label = "size = 19 "];
 	}
 }
