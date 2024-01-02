@@ -1,16 +1,77 @@
 push 6
 pop [0]
-push [1]
-push 2
-add
+push 0
+pop [1]
+begin_while_1:
+push [0]
+push 3
+jae compare_true_1:
+push 0
+jmp end_compare_false_1:
+compare_true_1:
+push 1
+end_compare_false_1:
+push 0
+je compare_and_false_1:
+push [0]
+push 6
+je compare_true_2:
+push 0
+jmp end_compare_false_2:
+compare_true_2:
+push 1
+end_compare_false_2:
+push 0
+je compare_and_false_1:
+push 1
+jmp compare_and_true_1:
+compare_and_false_1:
+push 0
+compare_and_true_1:
 push 0
 je end_while_1:
-push -1
-push 8
+push [0]
+push 1
+sub
+pop [0]
 push [1]
+push 7
 add
-mul
 pop [1]
+jmp begin_while_1:
 end_while_1:
-push 6
-pop [1]
+push [0]
+push 3
+jne compare_true_3:
+push 0
+jmp end_compare_false_3:
+compare_true_3:
+push 1
+end_compare_false_3:
+push 0
+jne compare_or_true_1:
+push [1]
+push 2
+je compare_true_4:
+push 0
+jmp end_compare_false_4:
+compare_true_4:
+push 1
+end_compare_false_4:
+push 0
+jne compare_or_true_1:
+push 0
+jmp compare_or_false_1:
+compare_or_true_1:
+push 1
+compare_or_false_1:
+push 0
+je end_if_1:
+push 2
+pop [0]
+end_if_1:
+push [0]
+push [1]
+out
+out
+hlt

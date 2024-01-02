@@ -11,18 +11,21 @@
 #include "../key_words.h"
 #include "../libraries/tree/dsl.h"
 
-#define syn_assert(condition)                                                                                                                                           \
+#define syn_assert(condition, left_node, right_node)                                                                                                                    \
  do {                                                                                                                                                                   \
-    if (!(condition))                                                                                                                                                   \
+    if (!(condition) || tokens->is_error)                                                                                                                               \
     {                                                                                                                                                                   \
-        tokens->is_error = true;                                                                                                                                       \
+        tokens->is_error = true;                                                                                                                                        \
         printf(RED  "File: %s\n"                                                                                                                                        \
                     "line: %d\n"                                                                                                                                        \
                     "Function: %s\n"                                                                                                                                    \
                     "Position: %ld\n"                                                                                                                                   \
-                    "The condition is not met: \"%s\"\n"RESET_COLOR, __FILE__, __LINE__, __PRETTY_FUNCTION__, tokens->token_array_position, #condition);               \
+                    "The condition is not met: \"%s\"\n"RESET_COLOR, __FILE__, __LINE__, __PRETTY_FUNCTION__, tokens->token_array_position, #condition);                \
                                                                                                                                                                         \
-        return 0;                                                                                                                                                       \
+        delete_node(left_node);                                                                                                                                         \
+        delete_node(right_node);                                                                                                                                        \
+                                                                                                                                                                        \
+        return NULL;                                                                                                                                                    \
     }                                                                                                                                                                   \
 }  while(0)
 
@@ -30,6 +33,8 @@ static tree_node *get_operator       (token_info *, tree *);
 static tree_node *get_if             (token_info *, tree *);
 static tree_node *get_while          (token_info *, tree *);
 static tree_node *get_assigment      (token_info *, tree *);
+static tree_node *get_logical         (token_info *, tree *);
+static tree_node *get_compare        (token_info *, tree *);
 static tree_node *get_sum            (token_info *, tree *);
 static tree_node *get_product        (token_info *, tree *);
 static tree_node *get_power          (token_info *, tree *);
@@ -45,22 +50,24 @@ tree_node *get_grammar(token_info *tokens, tree *tree_pointer)
     MYASSERT(tokens->token_array  != NULL, NULL_POINTER_PASSED_TO_FUNC, return NULL);
     MYASSERT(tree_pointer         != NULL, NULL_POINTER_PASSED_TO_FUNC, return NULL);
 
-    syn_assert(IS_BEGIN_OF_PROGRAM);
+    syn_assert(IS_BEGIN_OF_PROGRAM, NULL, NULL);
     ++tokens->token_array_position;
 
     tree_node *tree_node_pointer = get_operator(tokens, tree_pointer);
 
     while (tokens->token_array_position < tokens->size_token_array - 1)
     {
+        ++tree_pointer->size;
+
         ssize_t old_token_array_position = tokens->token_array_position;
         tree_node *tree_node_pointer_2   = get_operator(tokens, tree_pointer);
 
-        syn_assert(old_token_array_position < tokens->token_array_position);
+        syn_assert(old_token_array_position < tokens->token_array_position, tree_node_pointer, tree_node_pointer_2);
 
-        tree_node_pointer = create_node(KEY_WORD, {.operator_index = SEQ_EXEC}, tree_node_pointer, tree_node_pointer_2);
+        tree_node_pointer = CREATE_SEQ_EXEC(tree_node_pointer, tree_node_pointer_2);
     }
 
-    syn_assert(IS_END_OF_PROGRAM);
+    syn_assert(IS_END_OF_PROGRAM, tree_node_pointer, NULL);
 
     return tree_node_pointer;
 }
@@ -73,18 +80,23 @@ static tree_node *get_operator(token_info *tokens, tree *tree_pointer)
 
     tree_node *tree_node_pointer = NULL;
 
-    if (IS_BEGIN_OPERATOR)                                                                                          //FIXME error recursion
+    if (IS_BEGIN_OPERATOR)
     {
         ++tokens->token_array_position;
-        ++tree_pointer->size;                                                                                      //FIXME tree_pointer->size
 
         tree_node_pointer = get_operator(tokens, tree_pointer);
 
         while (!(IS_END_OPERATOR))
         {
+            ++tree_pointer->size;
+
+            ssize_t old_token_array_position = tokens->token_array_position;
+
             tree_node *tree_node_pointer_2 = get_operator(tokens, tree_pointer);
 
-            tree_node_pointer = create_node(KEY_WORD, {.operator_index = SEQ_EXEC}, tree_node_pointer, tree_node_pointer_2);
+            syn_assert(old_token_array_position < tokens->token_array_position, tree_node_pointer, tree_node_pointer_2);
+
+            tree_node_pointer = CREATE_SEQ_EXEC(tree_node_pointer, tree_node_pointer_2);
         }
 
         ++tokens->token_array_position;
@@ -94,7 +106,8 @@ static tree_node *get_operator(token_info *tokens, tree *tree_pointer)
     if (!(tree_node_pointer = get_if(tokens, tree_pointer)) && !(tree_node_pointer = get_while(tokens, tree_pointer)))
     {
         tree_node_pointer = get_assigment(tokens, tree_pointer);
-        syn_assert(IS_SEQUENTIAL_EXEC_OPER);
+
+        syn_assert(IS_SEQUENTIAL_EXEC_OPER, tree_node_pointer, NULL);
         ++tokens->token_array_position;
     }
 
@@ -114,17 +127,17 @@ static tree_node *get_if(token_info *tokens, tree *tree_pointer)
         ++tokens->token_array_position;
         ++tree_pointer->size;
 
-        syn_assert(IS_OPEN_PARENTHESIS);
+        syn_assert(IS_OPEN_PARENTHESIS, NULL, NULL);
         ++tokens->token_array_position;
 
-        tree_node_pointer = get_sum(tokens, tree_pointer);
+        tree_node_pointer = get_logical(tokens, tree_pointer);
 
-        syn_assert(IS_CLOSING_PARENTHESIS);
+        syn_assert(IS_CLOSING_PARENTHESIS, tree_node_pointer, NULL);
         ++tokens->token_array_position;
 
         tree_node *tree_node_pointer_2 = get_operator(tokens, tree_pointer);
 
-        tree_node_pointer = create_node(KEY_WORD, {.operator_index = IF}, tree_node_pointer, tree_node_pointer_2);
+        tree_node_pointer = CREATE_IF(tree_node_pointer, tree_node_pointer_2);
     }
 
     return tree_node_pointer;
@@ -143,12 +156,12 @@ static tree_node *get_while(token_info *tokens, tree *tree_pointer)
         ++tokens->token_array_position;
         ++tree_pointer->size;
 
-        syn_assert(IS_OPEN_PARENTHESIS);
+        syn_assert(IS_OPEN_PARENTHESIS, NULL, NULL);
         ++tokens->token_array_position;
 
-        tree_node_pointer = get_sum(tokens, tree_pointer);
+        tree_node_pointer = get_logical(tokens, tree_pointer);
 
-        syn_assert(IS_CLOSING_PARENTHESIS);
+        syn_assert(IS_CLOSING_PARENTHESIS, tree_node_pointer, NULL);
         ++tokens->token_array_position;
 
         tree_node *tree_node_pointer_2 = get_operator(tokens, tree_pointer);
@@ -178,13 +191,97 @@ static tree_node *get_assigment(token_info *tokens, tree *tree_pointer)
         ++tokens->token_array_position;
         ++tree_pointer->size;
 
-        tree_node *tree_node_pointer_2 = get_sum(tokens, tree_pointer);
+        tree_node *tree_node_pointer_2 = get_logical(tokens, tree_pointer);
 
-        tree_node_pointer = create_node(KEY_WORD, {.operator_index = ASGMT}, tree_node_pointer, tree_node_pointer_2);
+        tree_node_pointer = CREATE_ASSIGMENT(tree_node_pointer, tree_node_pointer_2);
     }
 
     else {
         --tokens->token_array_position;
+    }
+
+    return tree_node_pointer;
+}
+
+static tree_node *get_logical(token_info *tokens, tree *tree_pointer)
+{
+    MYASSERT(tokens               != NULL, NULL_POINTER_PASSED_TO_FUNC, return NULL);
+    MYASSERT(tokens->token_array  != NULL, NULL_POINTER_PASSED_TO_FUNC, return NULL);
+    MYASSERT(tree_pointer         != NULL, NULL_POINTER_PASSED_TO_FUNC, return NULL);
+
+    tree_node *tree_node_pointer = get_compare(tokens, tree_pointer);
+
+    while (IS_AND_OPER || IS_OR_OPER)
+    {
+        ssize_t operator_index = CURRENT_TOKEN.value.operator_index;
+        ++tokens->token_array_position;
+        ++tree_pointer->size;
+
+        tree_node *tree_node_pointer_2 = get_compare(tokens, tree_pointer);
+
+        switch(operator_index)
+        {
+            case AND:
+                tree_node_pointer = CREATE_AND(tree_node_pointer, tree_node_pointer_2);
+                break;
+
+            case OR:
+                tree_node_pointer = CREATE_OR(tree_node_pointer, tree_node_pointer_2);
+                break;
+
+            default:
+                syn_assert(0, tree_node_pointer, tree_node_pointer_2);
+        }
+    }
+
+    return tree_node_pointer;
+}
+
+static tree_node *get_compare(token_info *tokens, tree *tree_pointer)
+{
+    MYASSERT(tokens               != NULL, NULL_POINTER_PASSED_TO_FUNC, return NULL);
+    MYASSERT(tokens->token_array  != NULL, NULL_POINTER_PASSED_TO_FUNC, return NULL);
+    MYASSERT(tree_pointer         != NULL, NULL_POINTER_PASSED_TO_FUNC, return NULL);
+
+    tree_node *tree_node_pointer = get_sum(tokens, tree_pointer);
+
+    while (IS_BELOW_OPER || IS_MORE_OPER || IS_EQUAL_OPER || IS_MORE_OR_EQUAL_OPER || IS_BELOW_OR_EQUAL_OPER || IS_NOT_EQUAL_OPER)
+    {
+        ssize_t operator_index = CURRENT_TOKEN.value.operator_index;
+        ++tokens->token_array_position;
+        ++tree_pointer->size;
+
+        tree_node *tree_node_pointer_2 = get_sum(tokens, tree_pointer);
+
+        switch(operator_index)
+        {
+            case BELOW:
+                tree_node_pointer = CREATE_BELOW(tree_node_pointer, tree_node_pointer_2);
+                break;
+
+            case MORE:
+                tree_node_pointer = CREATE_MORE(tree_node_pointer, tree_node_pointer_2);
+                break;
+
+            case EQUAL:
+                tree_node_pointer = CREATE_EQUAL(tree_node_pointer, tree_node_pointer_2);
+                break;
+
+            case MORE_OR_EQUAL:
+                tree_node_pointer = CREATE_MORE_OR_EQUAL(tree_node_pointer, tree_node_pointer_2);
+                break;
+
+            case BELOW_OR_EQUAL:
+                tree_node_pointer = CREATE_BELOW_OR_EQUAL(tree_node_pointer, tree_node_pointer_2);
+                break;
+
+            case NOT_EQUAL:
+                tree_node_pointer = CREATE_NOT_EQUAL(tree_node_pointer, tree_node_pointer_2);
+                break;
+
+            default:
+                syn_assert(0, tree_node_pointer, tree_node_pointer_2);
+        }
     }
 
     return tree_node_pointer;
@@ -217,7 +314,7 @@ static tree_node *get_sum(token_info *tokens, tree *tree_pointer)
                 break;
 
             default:
-                syn_assert(0);
+                syn_assert(0, tree_node_pointer, tree_node_pointer_2);
         }
     }
 
@@ -251,7 +348,7 @@ static tree_node *get_product(token_info *tokens, tree *tree_pointer)
                 break;
 
             default:
-                syn_assert(0);
+                syn_assert(0, tree_node_pointer, tree_node_pointer_2);
         }
     }
 
@@ -292,7 +389,7 @@ static tree_node *get_negation(token_info *tokens, tree *tree_pointer)
         is_negation = true;
 
         ++tokens->token_array_position;
-        ++tree_pointer->size;
+        tree_pointer->size += 2;
     }
 
     tree_node *tree_node_pointer = get_parenthesis(tokens, tree_pointer);
@@ -368,9 +465,9 @@ static tree_node *get_parenthesis(token_info *tokens, tree *tree_pointer)
     {
         ++tokens->token_array_position;
 
-        tree_node_pointer = get_sum(tokens, tree_pointer);
+        tree_node_pointer = get_logical(tokens, tree_pointer);
 
-        syn_assert(IS_CLOSING_PARENTHESIS);
+        syn_assert(IS_CLOSING_PARENTHESIS, tree_node_pointer, NULL);
         ++tokens->token_array_position;
 
         return tree_node_pointer;
@@ -418,7 +515,7 @@ tree_node *get_variable(token_info *tokens, tree *tree_pointer)
         ++tree_pointer->size;
     }
 
-    syn_assert(string_index_old < tokens->token_array_position);
+    syn_assert(string_index_old < tokens->token_array_position, tree_node_pointer, NULL);
 
     return tree_node_pointer;
 }

@@ -15,7 +15,7 @@ static void tokens_destructor(token_info *tokens);
 static void tokens_constructor(token_info *tokens);
 static token_info *new_tokens();
 static char *saving_buffer(FILE *database_file);
-static void print_tokens(const token_info *tokens);
+static void print_tokens(const token_info *tokens, const variable_parametrs *variable_array);
 
 tree *input_tree_from_database(FILE *database_file)
 {
@@ -32,12 +32,14 @@ tree *input_tree_from_database(FILE *database_file)
 
     split_buffer_into_tokens(tree_pointer, database_buffer, tokens);
 
-    print_tokens(tokens);
+    print_tokens(tokens, tree_pointer->variable_array);
 
     tree_pointer->root = get_grammar(tokens, tree_pointer);
 
-    if (tokens->is_error) {
+    if (tokens->is_error)
+    {
         delete_node(tree_pointer->root);
+
         tree_pointer->root = NULL;
         tree_pointer->size = 0;
         tree_pointer->variable_array_position = 0;
@@ -88,7 +90,6 @@ static void tokens_constructor(token_info *tokens)
     MYASSERT(tokens->token_array != NULL, FAILED_TO_ALLOCATE_DYNAM_MEMOR, return);
 }
 
-
 static void tokens_destructor(token_info *tokens)
 {
     MYASSERT(tokens              != NULL, NULL_POINTER_PASSED_TO_FUNC, return);
@@ -105,8 +106,12 @@ static void tokens_destructor(token_info *tokens)
     tokens = NULL;
 }
 
-void print_tokens(const token_info *tokens)
+void print_tokens(const token_info *tokens, const variable_parametrs *variable_array)
 {
+    MYASSERT(tokens              != NULL, NULL_POINTER_PASSED_TO_FUNC, return);
+    MYASSERT(variable_array      != NULL, NULL_POINTER_PASSED_TO_FUNC, return);
+    MYASSERT(tokens->token_array != NULL, NULL_POINTER_PASSED_TO_FUNC, return);
+
     printf("size = %ld\n", tokens->size_token_array);
 
     for (ssize_t token_array_position = 0; token_array_position < tokens->size_token_array; token_array_position++)
@@ -115,13 +120,13 @@ void print_tokens(const token_info *tokens)
         {
             case VARIABLE:
             {
-                printf("VAR %ld pos = %ld\n", tokens->token_array[token_array_position].value.variable_index, token_array_position);
+                printf("VAR <%s> pos = %ld\n", variable_array[tokens->token_array[token_array_position].value.variable_index].name, token_array_position);
                 break;
             }
 
             case KEY_WORD:
             {
-                printf("KWD <%s> pos = %ld\n", KEY_WORDS[tokens->token_array[token_array_position].value.operator_index].real_name, token_array_position);
+                printf("KWD <%s> pos = %ld\n", KEY_WORDS[tokens->token_array[token_array_position].value.operator_index].name, token_array_position);
                 break;
             }
 

@@ -90,17 +90,17 @@ struct tree {
 
 IF_ON_TREE_DUMP(void tree_dump(tree *tree_pointer, ssize_t line, const char *file, const char *func));
 
-tree      *new_pointer_tree           ();
-ssize_t    tree_constructor           (tree *tree_pointer, debug_info_tree *info);
-ssize_t    tree_destructor            (tree *tree_pointer);
-ssize_t    verify_tree                (tree *tree_pointer, ssize_t line, const char *file, const char *func);
-tree_node *new_tree_node              ();
-void       delete_node                (tree_node *tree_node_pointer);
+tree      *new_pointer_tree();
+ssize_t    tree_constructor(tree *tree_pointer, debug_info_tree *info);
+ssize_t    tree_destructor(tree *tree_pointer);
+ssize_t    verify_tree(tree *tree_pointer, ssize_t line, const char *file, const char *func);
+tree_node *new_tree_node();
+void       delete_node(tree_node *tree_node_pointer);
 void       delete_node_without_subtree(tree_node *tree_node_pointer);
-tree_node *create_node                (type_node type, value_node value, tree_node *tree_node_left, tree_node *tree_node_right);
-tree_node *copying_node               (tree_node *src_tree_node);
-bool       check_node_is_number       (tree_node *tree_node_pointer);
-bool       node_is_equal_number       (tree_node *tree_node_pointer, double number);
+tree_node *create_node(type_node type, value_node value, tree_node *tree_node_left, tree_node *tree_node_right);
+tree_node *copying_node(tree_node *src_tree_node);
+bool       check_node_is_number(tree_node *tree_node_pointer);
+bool       node_is_equal_number(tree_node *tree_node_pointer, double number);
 
 ssize_t find_variable         (const char *current_token, size_t variable_len, variable_parametrs *variable_array, ssize_t variable_array_size);
 bool    add_variable          (const char *current_token, size_t variable_len, variable_parametrs *variable_array, ssize_t *variable_array_position_pointer);

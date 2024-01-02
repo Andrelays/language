@@ -4,63 +4,123 @@ digraph Tree {
 	splines=ortho;
 	subgraph cluster0 {
 		label = "called  from:    ../libraries/tree/tree.cpp(61)  ssize_t tree_destructor(tree*)";
-		node_0x604000000490  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [;] | <right> R} "];
-		node_0x604000000390  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [;] | <right> R} "];
+		node_0x604000000990  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [;] | <right> R} "];
+		node_0x604000000690  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [;] | <right> R} "];
+		node_0x604000000190  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [;] | <right> R} "];
 		node_0x604000000090  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [=] | <right> R} "];
-		node_0x604000000010  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [y = 0] | <right> R} "];
+		node_0x604000000010  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [x = 0] | <right> R} "];
 
 	node_0x604000000090:<left> -> node_0x604000000010 	[color = blue];
 		node_0x604000000050  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [6] | <right> R} "];
 
 	node_0x604000000090:<right> -> node_0x604000000050 	[color = blue];
 
-	node_0x604000000390:<left> -> node_0x604000000090 	[color = blue];
-		node_0x604000000350  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [while] | <right> R} "];
-		node_0x604000000150  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [+] | <right> R} "];
-		node_0x6040000000d0  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [x = 0] | <right> R} "];
+	node_0x604000000190:<left> -> node_0x604000000090 	[color = blue];
+		node_0x604000000150  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [=] | <right> R} "];
+		node_0x6040000000d0  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [y = 0] | <right> R} "];
 
 	node_0x604000000150:<left> -> node_0x6040000000d0 	[color = blue];
-		node_0x604000000110  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [2] | <right> R} "];
+		node_0x604000000110  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [0] | <right> R} "];
 
 	node_0x604000000150:<right> -> node_0x604000000110 	[color = blue];
 
-	node_0x604000000350:<left> -> node_0x604000000150 	[color = blue];
-		node_0x604000000310  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [=] | <right> R} "];
-		node_0x604000000190  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [x = 0] | <right> R} "];
+	node_0x604000000190:<right> -> node_0x604000000150 	[color = blue];
 
-	node_0x604000000310:<left> -> node_0x604000000190 	[color = blue];
-		node_0x6040000002d0  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [*] | <right> R} "];
-		node_0x604000000290  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [-1] | <right> R} "];
-
-	node_0x6040000002d0:<left> -> node_0x604000000290 	[color = blue];
-		node_0x604000000250  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [+] | <right> R} "];
-		node_0x6040000001d0  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [8] | <right> R} "];
+	node_0x604000000690:<left> -> node_0x604000000190 	[color = blue];
+		node_0x604000000650  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [while] | <right> R} "];
+		node_0x604000000350  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [and] | <right> R} "];
+		node_0x604000000250  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [more_or_equal] | <right> R} "];
+		node_0x6040000001d0  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [x = 0] | <right> R} "];
 
 	node_0x604000000250:<left> -> node_0x6040000001d0 	[color = blue];
-		node_0x604000000210  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [x = 0] | <right> R} "];
+		node_0x604000000210  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [3] | <right> R} "];
 
 	node_0x604000000250:<right> -> node_0x604000000210 	[color = blue];
 
-	node_0x6040000002d0:<right> -> node_0x604000000250 	[color = blue];
+	node_0x604000000350:<left> -> node_0x604000000250 	[color = blue];
+		node_0x604000000310  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [equal] | <right> R} "];
+		node_0x604000000290  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [x = 0] | <right> R} "];
+
+	node_0x604000000310:<left> -> node_0x604000000290 	[color = blue];
+		node_0x6040000002d0  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [6] | <right> R} "];
 
 	node_0x604000000310:<right> -> node_0x6040000002d0 	[color = blue];
 
 	node_0x604000000350:<right> -> node_0x604000000310 	[color = blue];
 
-	node_0x604000000390:<right> -> node_0x604000000350 	[color = blue];
+	node_0x604000000650:<left> -> node_0x604000000350 	[color = blue];
+		node_0x604000000610  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [;] | <right> R} "];
+		node_0x604000000490  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [=] | <right> R} "];
+		node_0x604000000390  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [x = 0] | <right> R} "];
 
 	node_0x604000000490:<left> -> node_0x604000000390 	[color = blue];
-		node_0x604000000450  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [=] | <right> R} "];
+		node_0x604000000450  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [-] | <right> R} "];
 		node_0x6040000003d0  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [x = 0] | <right> R} "];
 
 	node_0x604000000450:<left> -> node_0x6040000003d0 	[color = blue];
-		node_0x604000000410  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [6] | <right> R} "];
+		node_0x604000000410  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [1] | <right> R} "];
 
 	node_0x604000000450:<right> -> node_0x604000000410 	[color = blue];
 
 	node_0x604000000490:<right> -> node_0x604000000450 	[color = blue];
 
+	node_0x604000000610:<left> -> node_0x604000000490 	[color = blue];
+		node_0x6040000005d0  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [=] | <right> R} "];
+		node_0x6040000004d0  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [y = 0] | <right> R} "];
 
-		Info[shape = Mrecord, label = "size = 17 "];
+	node_0x6040000005d0:<left> -> node_0x6040000004d0 	[color = blue];
+		node_0x604000000590  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [+] | <right> R} "];
+		node_0x604000000510  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [y = 0] | <right> R} "];
+
+	node_0x604000000590:<left> -> node_0x604000000510 	[color = blue];
+		node_0x604000000550  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [7] | <right> R} "];
+
+	node_0x604000000590:<right> -> node_0x604000000550 	[color = blue];
+
+	node_0x6040000005d0:<right> -> node_0x604000000590 	[color = blue];
+
+	node_0x604000000610:<right> -> node_0x6040000005d0 	[color = blue];
+
+	node_0x604000000650:<right> -> node_0x604000000610 	[color = blue];
+
+	node_0x604000000690:<right> -> node_0x604000000650 	[color = blue];
+
+	node_0x604000000990:<left> -> node_0x604000000690 	[color = blue];
+		node_0x604000000950  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [if] | <right> R} "];
+		node_0x604000000850  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [or] | <right> R} "];
+		node_0x604000000750  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [not_equal] | <right> R} "];
+		node_0x6040000006d0  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [x = 0] | <right> R} "];
+
+	node_0x604000000750:<left> -> node_0x6040000006d0 	[color = blue];
+		node_0x604000000710  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [3] | <right> R} "];
+
+	node_0x604000000750:<right> -> node_0x604000000710 	[color = blue];
+
+	node_0x604000000850:<left> -> node_0x604000000750 	[color = blue];
+		node_0x604000000810  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [equal] | <right> R} "];
+		node_0x604000000790  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [y = 0] | <right> R} "];
+
+	node_0x604000000810:<left> -> node_0x604000000790 	[color = blue];
+		node_0x6040000007d0  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [2] | <right> R} "];
+
+	node_0x604000000810:<right> -> node_0x6040000007d0 	[color = blue];
+
+	node_0x604000000850:<right> -> node_0x604000000810 	[color = blue];
+
+	node_0x604000000950:<left> -> node_0x604000000850 	[color = blue];
+		node_0x604000000910  [shape = Mrecord, style = filled, fillcolor = "#8fbc8f", label = "{TYPE\n OPR | <left> L } | {VALUE\n [=] | <right> R} "];
+		node_0x604000000890  [shape = Mrecord, style = filled, fillcolor = "#87cefa", label = "{TYPE\n VAR | <left> L } | {VALUE\n [x = 0] | <right> R} "];
+
+	node_0x604000000910:<left> -> node_0x604000000890 	[color = blue];
+		node_0x6040000008d0  [shape = Mrecord, style = filled, fillcolor = "#ba7fa2", label = "{TYPE\n NUM | <left> L } | {VALUE\n [2] | <right> R} "];
+
+	node_0x604000000910:<right> -> node_0x6040000008d0 	[color = blue];
+
+	node_0x604000000950:<right> -> node_0x604000000910 	[color = blue];
+
+	node_0x604000000990:<right> -> node_0x604000000950 	[color = blue];
+
+
+		Info[shape = Mrecord, label = "size = 39 "];
 	}
 }

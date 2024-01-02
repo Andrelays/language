@@ -11,10 +11,8 @@
 #include "../key_words.h"
 #include "../libraries/tree/dsl.h"
 
- //TODO check unary-minus
-
-static ssize_t       find_key_word           (const char *current_token);
-static void          check_size_token_array  (token_info *tokens);
+static ssize_t find_key_word(const char *current_token);
+static void check_size_token_array(token_info *tokens);
 
 void split_buffer_into_tokens(tree *tree_pointer, const char *database_buffer, token_info *tokens)
 {
@@ -79,7 +77,7 @@ void split_buffer_into_tokens(tree *tree_pointer, const char *database_buffer, t
             continue;
         }
 
-        printf(RED "Error!\nUnknown character <%c> %d\n" RESET_COLOR, *database_buffer, *database_buffer);
+        printf(RED "Error!\nTokenizer: unknown token <%s>\n" RESET_COLOR, database_buffer);
         break;
     }
 
@@ -93,16 +91,31 @@ static ssize_t find_key_word(const char *current_token)
 {
     MYASSERT(current_token != NULL, NULL_POINTER_PASSED_TO_FUNC, return NO_KEY_WORD);
 
+    ssize_t possible_operator = NO_KEY_WORD;
+    size_t  possible_operator_len = 0;
+
     ssize_t size_operators_array = sizeof(KEY_WORDS) / sizeof(*KEY_WORDS);
 
     for (ssize_t operator_index = 0; operator_index < size_operators_array; operator_index++)
     {
-        if (strncmp(KEY_WORDS[operator_index].real_name, current_token, strlen(KEY_WORDS[operator_index].real_name)) == 0) {
-            return operator_index;
+        size_t len_name_key_word = strlen(KEY_WORDS[operator_index].real_name);
+
+        if (strncmp(KEY_WORDS[operator_index].real_name, current_token, len_name_key_word) == 0)
+        {
+            if (isspace(current_token[len_name_key_word]) || !(isalnum(current_token[len_name_key_word]) && isalnum(current_token[len_name_key_word - 1])))
+            {
+                if (possible_operator_len < len_name_key_word)
+                {
+                    possible_operator     = operator_index;
+                    possible_operator_len = len_name_key_word;
+                }
+            }
+
+            continue;
         }
     }
 
-    return NO_KEY_WORD;
+    return possible_operator;
 }
 
 static void check_size_token_array(token_info *tokens)
